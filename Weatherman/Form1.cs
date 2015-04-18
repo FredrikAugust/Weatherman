@@ -46,12 +46,31 @@ namespace Weatherman
             this.Enabled = true;
         }
 
+        public void WriteMessage(string message)
+        {
+            _text = message;
+
+            // Main dialogue timer
+            _timerIndex = 0; // This ensures that the method will restart writing the content
+
+            if (TextTimer.Enabled || Dialogue.Text.Contains(_text))
+            {
+                TextTimer.Enabled = false;
+            }
+            else
+            {
+                TextTimer.Enabled = true;
+            }
+
+            Dialogue.Text = "";
+        }
+
         /// <summary>
         /// These variables are used to determine what to write using the 'typewriter' method
         /// </summary>
 
-        private static int _timerIndex = 0;
-        private static string _WelcomeText = "Welcome to Weatherman API";
+        private int _timerIndex = 0;
+        private string _text;
 
         /// <summary>
         /// Nothing out of the ordinary;
@@ -63,9 +82,9 @@ namespace Weatherman
 
         private void TextTimer_Tick(object sender, EventArgs e)
         {
-            Dialogue.Text = _WelcomeText.Substring(0, _timerIndex) + "_";  //Substring is a part of Type_Text String that we declared at the start
+            Dialogue.Text = _text.Substring(0, _timerIndex) + "_";  //Substring is a part of Type_Text String that we declared at the start
             _timerIndex++;  //Doing a post fix
-            if (_timerIndex == _WelcomeText.Length + 1)
+            if (_timerIndex == _text.Length + 1)
             {
                 TextTimer.Enabled = false;
                 Dialogue.Text = Dialogue.Text.Replace("_", "\n_");
@@ -80,19 +99,8 @@ namespace Weatherman
 
         private void button1_Click(object sender, EventArgs e)  // Power button
         {
-            // Main dialogue timer
-            _timerIndex = 0; // This ensures that the method will restart writing the content
-
-            if (TextTimer.Enabled || Dialogue.Text.Contains(_WelcomeText))
-            {
-                TextTimer.Enabled = false;  
-            }
-            else
-            {
-                TextTimer.Enabled = true;
-            }
-
-            Dialogue.Text = "";
+            // Welcoming message
+            WriteMessage("Welcome to Weatherman API");
 
             UserInput.Focus();
             HideCaret(UserInput.Handle);
