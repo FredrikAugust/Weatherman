@@ -6,6 +6,11 @@ using System.Text.RegularExpressions;
 
 namespace Weatherman
 {
+    /// <summary>
+    /// This is just used to determine what resulted in the user advancing.
+    /// Doesn't do anything on it's own.
+    /// </summary>
+
     enum ContinueMethod
     {
         CorrectAnswer,
@@ -14,7 +19,13 @@ namespace Weatherman
 
     interface Parts
     {
-        string message { get; set; }
+        string message { get; set; }  // What the user should be prompted with initially
+
+        /// <summary>
+        /// Checks if the input is correct
+        /// </summary>
+        /// <param name="input">What the user entered</param>
+        /// <returns>Boolean for determining whether the user should advance or not, and a string for showing to the user</returns>
 
         Tuple<bool, string> parser(string input);
 
@@ -26,6 +37,12 @@ namespace Weatherman
         public string message { get; set; }
 
         public ContinueMethod cm { get; set; }
+
+        /// <summary>
+        /// Checks if the input is correct
+        /// </summary>
+        /// <param name="input">What the user entered</param>
+        /// <returns>Boolean for checking if the user should advance or not, and a string for showing to the user</returns>
 
         public Tuple<bool, string> parser(string input)
         {
@@ -41,6 +58,16 @@ namespace Weatherman
     }
     public class ErrorHandling
     {
+        /// <summary>
+        /// Determines what to do based on how many errors the user has.
+        /// Yes; I know this uses a switch, but that's becuase I'm lazy right now.
+        /// If you don't like it, feel free to create a pull request and fix it yourself :)
+        /// </summary>
+        /// <param name="_level">What level you are on when entering this method</param>
+        /// <param name="_errorLevel">How many times the user has failed</param>
+        /// <param name="input">What the user inputted to the mission</param>
+        /// <returns>Boolean for determining whether the user shall advance or not, and a string for showing the user.</returns>
+
         public Tuple<bool, string> ErrorHandler(int _level, int _errorLevel, string input)
         {
             switch (_level)
@@ -63,18 +90,28 @@ namespace Weatherman
             return Tuple.Create(false, "");  // This doesn't really have a purpose, but it makes VS shut up.
         }
     }
+
+    /// <summary>
+    /// This will just respond to you after you finish the first mission.
+    /// This will lead to the next part, which is getting name etc.
+    /// </summary>
+
     class WelcomeResponseClass : Parts
     {
-        public string message { get; set; }
+        public string message { get; set; }  // This is just the message to display when the mission starts
 
-        public ContinueMethod cm { get; set; }
+        public ContinueMethod cm { get; set; }  // Enum that is used to determine what made the program advance
+
+        /// <summary>
+        /// This gives you a witty remark or something along those lines depending on how you advanced to here.
+        /// </summary>
+        /// <param name="input">The text which the user inputted</param>
+        /// <returns>Boolean for determining whether the code passed the test or not and a return string for displaying</returns>
 
         public Tuple<bool, string> parser(string input)
         {
-            return Tuple.Create(true, "Wow, that is awesome!");
+            return Tuple.Create(true, "Wohooo.");
         }
-
-
     }
 
 }

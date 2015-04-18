@@ -131,6 +131,22 @@ namespace Weatherman
         private int errorLevel = 0;
         ErrorHandling ErrHandler = new ErrorHandling();
 
+        /// <summary>
+        /// This actually handles close to all the logic when it comes to level management.
+        /// First of all, it will only do something if the enter key is pressed;
+        /// this saves me from a lot of resource handling etc.
+        /// Secondly it stores the result from checking if the user input is a valid answer to the initial question.
+        /// This is stored in a tuple, as this is the easiest for validation and printing a message.
+        /// After that it checks if the answer was valid, and if it was it will set the ContinueMethod to 
+        /// CorrectAnswer, this will allow me to tailor the next dialogue to his/her answer.
+        /// After that it increases the level variable so I can move on, and then it prints the 'valid result'.
+        /// 
+        /// The error handling here is a bit klunky, but it works. It kind of works as a second parser, and I might merge them later, but this will do for now.
+        /// First it gets the parser result and checks if this passed;
+        /// if it did it will do the same as above. (once again some horrible code, but it works)
+        /// If not it will print the message saying you failed once again, and it will increase the error counter, which is again used to tailor the output.
+        /// </summary>
+
         private void UserInput_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.Enter)
@@ -139,7 +155,7 @@ namespace Weatherman
 
                 Tuple<bool, string> ParseResult = PartsArray[level].parser(UserInput.Text);
 
-                if (ParseResult.Item1)  // The boolean result which is returned by the "parser"
+                if (ParseResult.Item1)  // Did it pass the initial test?
                 {
                     PartsArray[level].cm = ContinueMethod.CorrectAnswer;
                     level += 1;
@@ -150,9 +166,9 @@ namespace Weatherman
                     Tuple<bool, string> ErrResult = ErrHandler.ErrorHandler(level, errorLevel, UserInput.Text);
                     if (ErrResult.Item1)
                     {
-                        WriteMessage(ErrResult.Item2);
-                        level += 1;
                         PartsArray[level].cm = ContinueMethod.ErrorOverload;
+                        level += 1;
+                        WriteMessage(ErrResult.Item2);
                     }
                     else
                     {
@@ -161,7 +177,7 @@ namespace Weatherman
                     }
                 }
 
-                UserInput.Text = "";
+                UserInput.Text = "";  // This clears the input field for next 'task'
             }
         }
     }
