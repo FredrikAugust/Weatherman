@@ -99,8 +99,7 @@ namespace Weatherman
 
         private void button1_Click(object sender, EventArgs e)  // Power button
         {
-            // Welcoming message
-            WriteMessage("Welcome to Weatherman API");
+            WriteMessage("Hello?");
 
             UserInput.Focus();
             HideCaret(UserInput.Handle);
