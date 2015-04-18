@@ -45,7 +45,7 @@ namespace Weatherman
             // 
             // PowerButton
             // 
-            this.PowerButton.Location = new System.Drawing.Point(12, 418);
+            this.PowerButton.Location = new System.Drawing.Point(24, 415);
             this.PowerButton.Name = "PowerButton";
             this.PowerButton.Size = new System.Drawing.Size(46, 23);
             this.PowerButton.TabIndex = 0;
@@ -59,7 +59,7 @@ namespace Weatherman
             this.label1.BackColor = System.Drawing.Color.Black;
             this.label1.Font = new System.Drawing.Font("Press Start 2P", 13.25F, System.Drawing.FontStyle.Bold);
             this.label1.ForeColor = System.Drawing.Color.White;
-            this.label1.Location = new System.Drawing.Point(133, 341);
+            this.label1.Location = new System.Drawing.Point(101, 418);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(27, 18);
             this.label1.TabIndex = 2;
@@ -70,7 +70,7 @@ namespace Weatherman
             // 
             this.Dialogue.AutoSize = true;
             this.Dialogue.Font = new System.Drawing.Font("Atari Classic Chunky", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Dialogue.Location = new System.Drawing.Point(125, 28);
+            this.Dialogue.Location = new System.Drawing.Point(93, 54);
             this.Dialogue.Name = "Dialogue";
             this.Dialogue.Size = new System.Drawing.Size(0, 19);
             this.Dialogue.TabIndex = 3;
@@ -86,11 +86,12 @@ namespace Weatherman
             this.UserInput.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.UserInput.Font = new System.Drawing.Font("Atari Classic Chunky", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.UserInput.ForeColor = System.Drawing.SystemColors.Menu;
-            this.UserInput.Location = new System.Drawing.Point(161, 340);
+            this.UserInput.Location = new System.Drawing.Point(129, 417);
             this.UserInput.Name = "UserInput";
             this.UserInput.Size = new System.Drawing.Size(572, 19);
             this.UserInput.TabIndex = 4;
             this.UserInput.TextChanged += new System.EventHandler(this.textBox1_TextChanged_1);
+            this.UserInput.KeyDown += new System.Windows.Forms.KeyEventHandler(this.UserInput_KeyDown);
             // 
             // panel1
             // 
@@ -99,7 +100,7 @@ namespace Weatherman
             this.panel1.CausesValidation = false;
             this.panel1.Cursor = System.Windows.Forms.Cursors.Arrow;
             this.panel1.Enabled = false;
-            this.panel1.Location = new System.Drawing.Point(129, 337);
+            this.panel1.Location = new System.Drawing.Point(97, 414);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(604, 25);
             this.panel1.TabIndex = 5;

@@ -88,7 +88,6 @@ namespace Weatherman
             {
                 TextTimer.Enabled = false;
                 Dialogue.Text = Dialogue.Text.Replace("_", "\n_");
-
             }
         }
 
@@ -99,7 +98,7 @@ namespace Weatherman
 
         private void button1_Click(object sender, EventArgs e)  // Power button
         {
-            WriteMessage("Hello?");
+            MainContent();
 
             UserInput.Focus();
             HideCaret(UserInput.Handle);
@@ -108,6 +107,24 @@ namespace Weatherman
         private void textBox1_TextChanged_1(object sender, EventArgs e)
         {
 
+        }
+
+        private int level;
+
+        private void MainContent()
+        {
+            // Initialise the game
+            level = 0;
+            WriteMessage("Welcome to Weatherman!\nYou can always type your \ncommands, even when \nWeatherman is speaking. \nDon't hesitate to interupt.\n\nType anything to start");
+        }
+
+        private void UserInput_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                //(UserInput.Text);
+                UserInput.Text = "";
+            }
         }
     }
 }
