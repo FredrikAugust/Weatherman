@@ -41,7 +41,6 @@ namespace Weatherman
             this.TextTimer = new System.Windows.Forms.Timer(this.components);
             this.UserInput = new System.Windows.Forms.TextBox();
             this.panel1 = new System.Windows.Forms.Panel();
-            this.CursorTimer = new System.Windows.Forms.Timer(this.components);
             this.SuspendLayout();
             // 
             // PowerButton
@@ -105,11 +104,6 @@ namespace Weatherman
             this.panel1.Size = new System.Drawing.Size(604, 25);
             this.panel1.TabIndex = 5;
             // 
-            // CursorTimer
-            // 
-            this.CursorTimer.Interval = 400;
-            this.CursorTimer.Tick += new System.EventHandler(this.CursorTimer_Tick);
-            // 
             // Weatherman
             // 
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
@@ -136,7 +130,6 @@ namespace Weatherman
         private System.Windows.Forms.Timer TextTimer;
         private TextBox UserInput;
         private Panel panel1;
-        private Timer CursorTimer;
     }
 }
 

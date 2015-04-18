@@ -94,51 +94,13 @@ namespace Weatherman
 
             Dialogue.Text = "";
 
-            // Input timer
-            CursorTimer.Enabled = true;
             UserInput.Focus();
             HideCaret(UserInput.Handle);
         }
 
         private void textBox1_TextChanged_1(object sender, EventArgs e)
         {
-            if (UserInput.Text.Length >= 1 && Convert.ToString(UserInput.Text[0]) != "_")
-            {
-                UserInput.Text = UserInput.Text.Replace("_", "");
-                CursorTimer.Enabled = false;
-            }
-            else
-            {
-                CursorTimer.Enabled = true;
-            }
-        }
 
-        private bool IsCursor = false;
-
-        /// <summary>
-        /// This contains the logic to make the cursor blink in the input field
-        /// </summary>
-
-        private void CursorTimer_Tick(object sender, EventArgs e)
-        {
-            if (!IsCursor)
-            {
-                UserInput.Text += "_";
-                IsCursor = true;
-            }
-            else
-            {
-                try
-                {
-                    UserInput.Text = UserInput.Text.Remove(UserInput.Text.Length - 1);
-                    IsCursor = false;
-                }
-                catch (ArgumentOutOfRangeException ex)
-                {
-                    IsCursor = false;
-                    Console.WriteLine(ex.Message); // Debugging
-                }
-            }
         }
     }
 }
