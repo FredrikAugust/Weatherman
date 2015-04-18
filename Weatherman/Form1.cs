@@ -27,7 +27,9 @@ namespace Weatherman
             // Include splash screen perhaps?
 
             // Add all the parts to the partsarray
-            PartsArray[0] = new WelcomeClass() { message = "Welcome to Weatherman!\nYou can always type your \ncommands, even when \nWeatherman is speaking. \nDon't hesitate to interupt.\n\nType anything to start" };
+            PartsArray[0] = new WelcomeClass() { 
+                message = "Welcome to Weatherman!\nYou can always type your \ncommands, even when \nWeatherman is speaking. \nDon't hesitate to interupt.\n\nType anything to start"
+            };
         }
 
         private void label1_Click(object sender, EventArgs e)
@@ -121,9 +123,18 @@ namespace Weatherman
         {
             if (e.KeyCode == Keys.Enter)
             {
-                PartsArray[level].parser(UserInput.Text);
+                TextTimer.Enabled = false;
+
+                Tuple<bool, string> ParseResult = PartsArray[level].parser(UserInput.Text);
 
                 UserInput.Text = "";
+
+                if (ParseResult.Item1)  // The boolean result which is returned by the "parser"
+                {
+                    level += 1;
+                }
+
+                WriteMessage(ParseResult.Item2);  // The result part that contains a string
             }
         }
     }
