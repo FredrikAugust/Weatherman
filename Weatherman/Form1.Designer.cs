@@ -78,6 +78,7 @@ namespace Weatherman
             // 
             // TextTimer
             // 
+            this.TextTimer.Interval = 75;
             this.TextTimer.Tick += new System.EventHandler(this.TextTimer_Tick);
             // 
             // UserInput

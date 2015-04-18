@@ -27,8 +27,14 @@ namespace Weatherman
             // Include splash screen perhaps?
 
             // Add all the parts to the partsarray
-            PartsArray[0] = new WelcomeClass() { 
+            PartsArray[0] = new WelcomeClass() 
+            {
                 message = "Welcome to Weatherman!\nYou can always type your \ncommands, even when \nWeatherman is speaking. \nDon't hesitate to interupt.\n\nType anything to start"
+            };
+
+            PartsArray[1] = new WelcomeResponseClass()
+            {
+                message = "This is so disorienting."
             };
         }
 
@@ -99,7 +105,7 @@ namespace Weatherman
         }
 
         private int level;
-        
+
         /// <summary>
         /// This first initiates the timer which controls the tyepwriter effect of the main game dialogue.
         /// After that it starts the timer which creates a cursor in the input area.
@@ -107,6 +113,9 @@ namespace Weatherman
 
         private void button1_Click(object sender, EventArgs e)  // Power button
         {
+            level = 0;
+            errorLevel = 0;
+
             // Just to start off the program
             WriteMessage(PartsArray[0].message);
 
@@ -119,6 +128,9 @@ namespace Weatherman
 
         }
 
+        private int errorLevel = 0;
+        ErrorHandling ErrHandler = new ErrorHandling();
+
         private void UserInput_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.Enter)
@@ -127,14 +139,27 @@ namespace Weatherman
 
                 Tuple<bool, string> ParseResult = PartsArray[level].parser(UserInput.Text);
 
-                UserInput.Text = "";
-
                 if (ParseResult.Item1)  // The boolean result which is returned by the "parser"
                 {
                     level += 1;
+                    WriteMessage(ParseResult.Item2);
+                }
+                else
+                {
+                    Tuple<bool, string> ErrResult = ErrHandler.ErrorHandler(level, errorLevel, UserInput.Text);
+                    if (ErrResult.Item1)
+                    {
+                        WriteMessage(ErrResult.Item2);
+                        level += 1;
+                    }
+                    else
+                    {
+                        WriteMessage(ErrResult.Item2);
+                        errorLevel += 1;
+                    }
                 }
 
-                WriteMessage(ParseResult.Item2);  // The result part that contains a string
+                UserInput.Text = "";
             }
         }
     }
