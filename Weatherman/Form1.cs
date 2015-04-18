@@ -141,6 +141,7 @@ namespace Weatherman
 
                 if (ParseResult.Item1)  // The boolean result which is returned by the "parser"
                 {
+                    PartsArray[level].cm = ContinueMethod.CorrectAnswer;
                     level += 1;
                     WriteMessage(ParseResult.Item2);
                 }
@@ -151,6 +152,7 @@ namespace Weatherman
                     {
                         WriteMessage(ErrResult.Item2);
                         level += 1;
+                        PartsArray[level].cm = ContinueMethod.ErrorOverload;
                     }
                     else
                     {

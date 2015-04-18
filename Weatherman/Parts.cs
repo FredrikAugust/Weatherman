@@ -6,20 +6,30 @@ using System.Text.RegularExpressions;
 
 namespace Weatherman
 {
+    enum ContinueMethod
+    {
+        CorrectAnswer,
+        ErrorOverload
+    }
+
     interface Parts
     {
         string message { get; set; }
 
         Tuple<bool, string> parser(string input);
+
+        ContinueMethod cm { get; set; }
     }
 
     class WelcomeClass : Parts
     {
         public string message { get; set; }
 
+        public ContinueMethod cm { get; set; }
+
         public Tuple<bool, string> parser(string input)
         {
-            if (input == "anything")
+            if (input.ToLower() == "anything")
             {
                 return Tuple.Create(true, "Wow, you're really \ngood at taking things \nliterally aren't ya?");
             }
@@ -48,20 +58,23 @@ namespace Weatherman
 
                 default:
                     return Tuple.Create(false, "You really suck, don't you?");
-                    break;
             }
 
             return Tuple.Create(false, "");  // This doesn't really have a purpose, but it makes VS shut up.
         }
     }
-    public class WelcomeResponseClass : Parts
+    class WelcomeResponseClass : Parts
     {
         public string message { get; set; }
+
+        public ContinueMethod cm { get; set; }
 
         public Tuple<bool, string> parser(string input)
         {
             return Tuple.Create(true, "Wow, that is awesome!");
         }
+
+
     }
 
 }
