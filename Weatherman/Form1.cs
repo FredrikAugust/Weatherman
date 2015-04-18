@@ -20,9 +20,14 @@ namespace Weatherman
             InitializeComponent();
         }
 
+        private Parts[] PartsArray = new Parts[20];
+
         private void Form1_Load(object sender, EventArgs e)
         {
             // Include splash screen perhaps?
+
+            // Add all the parts to the partsarray
+            PartsArray[0] = new WelcomeClass() { message = "Welcome to Weatherman!\nYou can always type your \ncommands, even when \nWeatherman is speaking. \nDon't hesitate to interupt.\n\nType anything to start" };
         }
 
         private void label1_Click(object sender, EventArgs e)
@@ -91,6 +96,8 @@ namespace Weatherman
             }
         }
 
+        private int level;
+        
         /// <summary>
         /// This first initiates the timer which controls the tyepwriter effect of the main game dialogue.
         /// After that it starts the timer which creates a cursor in the input area.
@@ -98,7 +105,8 @@ namespace Weatherman
 
         private void button1_Click(object sender, EventArgs e)  // Power button
         {
-            MainContent();
+            // Just to start off the program
+            WriteMessage(PartsArray[0].message);
 
             UserInput.Focus();
             HideCaret(UserInput.Handle);
@@ -109,20 +117,12 @@ namespace Weatherman
 
         }
 
-        private int level;
-
-        private void MainContent()
-        {
-            // Initialise the game
-            level = 0;
-            WriteMessage("Welcome to Weatherman!\nYou can always type your \ncommands, even when \nWeatherman is speaking. \nDon't hesitate to interupt.\n\nType anything to start");
-        }
-
         private void UserInput_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.Enter)
             {
-                //(UserInput.Text);
+                PartsArray[level].parser(UserInput.Text);
+
                 UserInput.Text = "";
             }
         }
