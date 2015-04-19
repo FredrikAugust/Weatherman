@@ -28,6 +28,7 @@ namespace Weatherman
         /// </summary>
         private void Form1_Load(object sender, EventArgs e)
         {
+            email.Hide();
             nsahack.Hide();
 
             // Include splash screen perhaps?
@@ -39,10 +40,12 @@ namespace Weatherman
             };
 
             PartsArray[1] = new WelcomeResponseClass(); // This isntance of the class does not have a message prop becuase it doesn't need one.
-
-            PartsArray[2] = new GetNameClass(); // Same as the reason stated above.
-
+            PartsArray[2] = new GetName(); // Same as the reason stated above.
             PartsArray[5] = new IntroToWeatherman(); // You know..
+            PartsArray[6] = new NoYes();
+            PartsArray[7] = new PresentScript();
+            PartsArray[8] = new HackNSA();
+            PartsArray[9] = new HackNSAReturn();
         }
 
         private void label1_Click(object sender, EventArgs e)
@@ -183,9 +186,31 @@ namespace Weatherman
                         break;
                     #endregion
 
+                    #region Level 8
+                    case 8:
+                        PartsArray[8].cm = ContinueMethod.CorrectAnswer;
+                        email.Show();
+                        WriteMessage(PartsArray[8].parser(UserInput.Text).Item2);
+                        UserInput.Text = "";
+                        level++;
+                        break;
+                    #endregion
+
                     default:
                         try
                         {
+                            #region Hide email and accessories
+                            try
+                            {
+                                email.Hide();
+                                filecontent.Hide();
+                            }
+                            catch (Exception ex)
+                            {
+                                throw new Exception(ex.Message);
+                            }
+                            #endregion
+
                             Tuple<bool, string> ParseResult = PartsArray[level].parser(UserInput.Text);
 
                             if (ParseResult.Item1)  // Did it pass the initial test?
@@ -252,6 +277,23 @@ namespace Weatherman
                 weathermanLoad.Visible = false;
                 level += 1;
                 WriteMessage("Weatherman loaded.\n\nEnter Weatherman by typing:\n'lisp(((weatherman)))'");
+            }
+        }
+
+        private void panel2_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void viewContent_Click(object sender, EventArgs e)
+        {
+            if (filecontent.Visible == false)
+            {
+                filecontent.Visible = true;
+            }
+            else
+            {
+                filecontent.Visible = false;
             }
         }
     }

@@ -107,6 +107,8 @@ namespace Weatherman
                 default:
                     return Tuple.Create(false, "Wh.. What happened?\nYou.. You broke my game.");
             }
+
+            throw new Exception();
         }
     }
 
@@ -131,7 +133,7 @@ namespace Weatherman
         }
     }
 
-    class GetNameClass : Parts
+    class GetName : Parts
     {
         public string message { get; set; }
 
@@ -164,6 +166,88 @@ namespace Weatherman
             {
                 return Tuple.Create(false, "");
             }
+        }
+
+        public ContinueMethod cm { get; set; }
+    }
+
+    class NoYes : Parts
+    {
+        public string message { get; set; }
+
+        public Tuple<bool, string> parser(string input)
+        {
+            if (input.ToLower().Contains("yes") || input.ToLower().Contains("ok"))
+            {
+                return Tuple.Create(true, "> Good.\n> Real good.\n\n> So good that IGN would\n> probably give you 11/10.\n> Not that that is hard ofc.");
+            }
+            else
+            {
+                return Tuple.Create(true, input + "?\n\nYes.");
+            }
+        }
+
+        public ContinueMethod cm { get; set; }
+    }
+
+    class PresentScript : Parts
+    {
+
+        public string message { get; set; }
+
+        public Tuple<bool, string> parser(string input)
+        {
+            return Tuple.Create(true, "> Ok, so I came up with this script.\n> It is really beautiful, and\n> should hopefully get us what we need.\n> I even created an alias for it\n> so all you need to do when \n> in the server is type:\n> sudo GetWeather\n>\n> Can you do that?");
+        }
+
+        public ContinueMethod cm { get; set; }
+    }
+
+    class HackNSA : Parts
+    {
+        public string message { get; set; }
+
+        public Tuple<bool, string> parser(string input)
+        {
+            return Tuple.Create(true, "> Now, as to get into \n> the server. I created \n> a nifty little file\n> that if executed will\n> allow us access!\n\n> What do you think?");
+        }
+
+        public ContinueMethod cm { get; set; }
+    }
+
+    class HackNSAReturn : Parts
+    {
+        public string message { get; set; }
+
+        public Tuple<bool, string> parser(string input)
+        {
+            string[] positiveWords = new string[] { "awesome", "cool", "nice" };
+
+            foreach (string word in positiveWords)
+            {
+                if (input.ToLower().Contains(word))
+                {
+                    return Tuple.Create(true, "> I agree, it is \n> " + input);
+                }
+                else
+                {
+                    return Tuple.Create(true, "> Either you didn't type a \n> positive word,\n> or my program didn't catch it.\n> Nevertheless,\n> <insert word here>.");
+                }
+            }
+
+            throw new Exception("My program died although it is theoretically impossible.");
+        }
+
+        public ContinueMethod cm { get; set; }
+    }
+
+    class AccessServer : Parts
+    {
+        public string message { get; set; }
+
+        public Tuple<bool, string> parser(string input)
+        {
+            return Tuple.Create();
         }
 
         public ContinueMethod cm { get; set; }

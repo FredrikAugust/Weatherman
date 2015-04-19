@@ -44,6 +44,18 @@ namespace Weatherman
             this.nsahack = new System.Windows.Forms.ProgressBar();
             this.weathermanLoad = new System.Windows.Forms.ProgressBar();
             this.loadingTimer = new System.Windows.Forms.Timer(this.components);
+            this.email = new System.Windows.Forms.Panel();
+            this.label2 = new System.Windows.Forms.Label();
+            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.label3 = new System.Windows.Forms.Label();
+            this.textBox2 = new System.Windows.Forms.TextBox();
+            this.label4 = new System.Windows.Forms.Label();
+            this.richTextBox1 = new System.Windows.Forms.RichTextBox();
+            this.viewContent = new System.Windows.Forms.Button();
+            this.filecontent = new System.Windows.Forms.Panel();
+            this.richTextBox2 = new System.Windows.Forms.RichTextBox();
+            this.email.SuspendLayout();
+            this.filecontent.SuspendLayout();
             this.SuspendLayout();
             // 
             // PowerButton
@@ -131,10 +143,114 @@ namespace Weatherman
             this.loadingTimer.Interval = 200;
             this.loadingTimer.Tick += new System.EventHandler(this.loadingTimer_Tick);
             // 
+            // email
+            // 
+            this.email.BackColor = System.Drawing.SystemColors.ActiveCaption;
+            this.email.Controls.Add(this.viewContent);
+            this.email.Controls.Add(this.richTextBox1);
+            this.email.Controls.Add(this.label4);
+            this.email.Controls.Add(this.textBox2);
+            this.email.Controls.Add(this.label3);
+            this.email.Controls.Add(this.textBox1);
+            this.email.Controls.Add(this.label2);
+            this.email.Location = new System.Drawing.Point(634, 12);
+            this.email.Name = "email";
+            this.email.Size = new System.Drawing.Size(175, 226);
+            this.email.TabIndex = 8;
+            this.email.Paint += new System.Windows.Forms.PaintEventHandler(this.panel2_Paint);
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(3, 6);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(23, 13);
+            this.label2.TabIndex = 0;
+            this.label2.Text = "To:";
+            // 
+            // textBox1
+            // 
+            this.textBox1.Enabled = false;
+            this.textBox1.Location = new System.Drawing.Point(6, 22);
+            this.textBox1.Name = "textBox1";
+            this.textBox1.Size = new System.Drawing.Size(156, 20);
+            this.textBox1.TabIndex = 1;
+            this.textBox1.Text = "nsa@freedomfighters.net";
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(3, 45);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(33, 13);
+            this.label3.TabIndex = 2;
+            this.label3.Text = "From:";
+            // 
+            // textBox2
+            // 
+            this.textBox2.Enabled = false;
+            this.textBox2.Location = new System.Drawing.Point(6, 61);
+            this.textBox2.Name = "textBox2";
+            this.textBox2.Size = new System.Drawing.Size(156, 20);
+            this.textBox2.TabIndex = 3;
+            this.textBox2.Text = "KingWeather@LegitLawyers.ng";
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(3, 84);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(53, 13);
+            this.label4.TabIndex = 4;
+            this.label4.Text = "Message:";
+            // 
+            // richTextBox1
+            // 
+            this.richTextBox1.Enabled = false;
+            this.richTextBox1.Location = new System.Drawing.Point(6, 101);
+            this.richTextBox1.Name = "richTextBox1";
+            this.richTextBox1.Size = new System.Drawing.Size(156, 89);
+            this.richTextBox1.TabIndex = 5;
+            this.richTextBox1.Text = "Helo. Look at this funny cat pictures!                                      __   " +
+    "                                      Files to send:                            " +
+    "                      funnycat.sh";
+            // 
+            // viewContent
+            // 
+            this.viewContent.Location = new System.Drawing.Point(6, 196);
+            this.viewContent.Name = "viewContent";
+            this.viewContent.Size = new System.Drawing.Size(156, 23);
+            this.viewContent.TabIndex = 6;
+            this.viewContent.Text = "View File Content";
+            this.viewContent.UseVisualStyleBackColor = true;
+            this.viewContent.Click += new System.EventHandler(this.viewContent_Click);
+            // 
+            // filecontent
+            // 
+            this.filecontent.BackColor = System.Drawing.SystemColors.ActiveCaption;
+            this.filecontent.Controls.Add(this.richTextBox2);
+            this.filecontent.Location = new System.Drawing.Point(634, 245);
+            this.filecontent.Name = "filecontent";
+            this.filecontent.Size = new System.Drawing.Size(175, 106);
+            this.filecontent.TabIndex = 9;
+            this.filecontent.Visible = false;
+            // 
+            // richTextBox2
+            // 
+            this.richTextBox2.Enabled = false;
+            this.richTextBox2.Location = new System.Drawing.Point(3, 3);
+            this.richTextBox2.Name = "richTextBox2";
+            this.richTextBox2.Size = new System.Drawing.Size(169, 100);
+            this.richTextBox2.TabIndex = 7;
+            this.richTextBox2.Text = "mv /security /dev/null                             cat /etc/passwords.md >> myfil" +
+    "e.txt                       ";
+            // 
             // Weatherman
             // 
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.ClientSize = new System.Drawing.Size(821, 453);
+            this.Controls.Add(this.filecontent);
+            this.Controls.Add(this.email);
             this.Controls.Add(this.weathermanLoad);
             this.Controls.Add(this.nsahack);
             this.Controls.Add(this.label1);
@@ -146,6 +262,9 @@ namespace Weatherman
             this.Name = "Weatherman";
             this.Text = "Weatherman";
             this.Load += new System.EventHandler(this.Form1_Load);
+            this.email.ResumeLayout(false);
+            this.email.PerformLayout();
+            this.filecontent.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -162,6 +281,16 @@ namespace Weatherman
         private ProgressBar nsahack;
         private ProgressBar weathermanLoad;
         private Timer loadingTimer;
+        private Panel email;
+        private Label label2;
+        private Label label4;
+        private TextBox textBox2;
+        private Label label3;
+        private TextBox textBox1;
+        private RichTextBox richTextBox1;
+        private Button viewContent;
+        private Panel filecontent;
+        private RichTextBox richTextBox2;
     }
 }
 
