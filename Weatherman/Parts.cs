@@ -104,6 +104,10 @@ namespace Weatherman
                         return Tuple.Create(false, "ERROR: permission denied\n\nTry running with sudo");
                     }
 
+                case 10:
+                    // > ERROR: permission denied\n>\n> Try running with sudo
+                    break;
+
                 default:
                     return Tuple.Create(false, "Wh.. What happened?\nYou.. You broke my game.");
             }
@@ -247,7 +251,28 @@ namespace Weatherman
 
         public Tuple<bool, string> parser(string input)
         {
-            return Tuple.Create();
+            return Tuple.Create(true, "> Now, to access the server just run:\n> \n> 'login -s NSA -p myfile.txt'\n>\n> Now, I can't type that\n> so you'll have to do that.");
+        }
+
+        public ContinueMethod cm { get; set; }
+    }
+
+    class CheckAccessServer : Parts
+    {
+        public string message { get; set; }
+
+        public Tuple<bool, string> parser(string input)
+        {
+            if (input == "login -s NSA -p myfile.txt")
+            {
+                return Tuple.Create(false, "");
+            }
+            else if (input == "sudo login -s NSA -p myfile.txt")
+            {
+                return Tuple.Create(true, "> I am impressed;\n> You remembered that to abuse\n> your super powers.");
+            }
+
+            throw new Exception();
         }
 
         public ContinueMethod cm { get; set; }

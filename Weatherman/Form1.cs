@@ -46,6 +46,7 @@ namespace Weatherman
             PartsArray[7] = new PresentScript();
             PartsArray[8] = new HackNSA();
             PartsArray[9] = new HackNSAReturn();
+            PartsArray[10] = new AccessServer();
         }
 
         private void label1_Click(object sender, EventArgs e)
