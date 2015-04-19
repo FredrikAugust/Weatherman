@@ -35,12 +35,14 @@ namespace Weatherman
             // Add all the parts to the partsarray
             PartsArray[0] = new WelcomeClass() 
             {
-                message = "Welcome to Weatherman!\nYou can always type your \ncommands, even when \nWeatherman is speaking. \nDon't hesitate to interupt.\n\nType anything to start or\nexit to exit."
+                message = "Welcome to Weatherman!\nYou can always type your \ncommands, even when \nWeatherman is speaking. \nDon't hesitate to interupt.\n\nType anything to start or\nexit to exit.\n\nIf you are stuck,\npress enter.\nThat usually works."
             };
 
             PartsArray[1] = new WelcomeResponseClass(); // This isntance of the class does not have a message prop becuase it doesn't need one.
 
             PartsArray[2] = new GetNameClass(); // Same as the reason stated above.
+
+            PartsArray[5] = new IntroToWeatherman(); // You know..
         }
 
         private void label1_Click(object sender, EventArgs e)
@@ -172,12 +174,14 @@ namespace Weatherman
 
                 switch (level)
                 {
+                    #region Level 3
                     case 3:
                         WriteMessage("Loading Whetherman..\n\n\nShit..\n\nI mean Weatherman..");
                         weathermanLoad.Visible = true;
                         loadingTimer.Enabled = true;
                         level++;
                         break;
+                    #endregion
 
                     default:
                         try
@@ -186,7 +190,7 @@ namespace Weatherman
 
                             if (ParseResult.Item1)  // Did it pass the initial test?
                             {
-                                #region UserInputParsing Parses the user input and sees if it is a valid input for proceeding to the next level
+                                #region Parse user input
                                 PartsArray[level].cm = ContinueMethod.CorrectAnswer;
                                 level += 1;
                                 WriteMessage(ParseResult.Item2);
@@ -194,7 +198,7 @@ namespace Weatherman
                             }
                             else
                             {
-                                #region ErrorHandling Simple error handling of the missions
+                                #region Error Handling
                                 Tuple<bool, string> ErrResult = ErrHandler.ErrorHandler(level, errorLevel, UserInput.Text);
                                 if (ErrResult.Item1)
                                 {
@@ -247,6 +251,7 @@ namespace Weatherman
                 loadingTimer.Enabled = false;
                 weathermanLoad.Visible = false;
                 level += 1;
+                WriteMessage("Weatherman loaded.\n\nEnter Weatherman by typing:\n'lisp(((weatherman)))'");
             }
         }
     }

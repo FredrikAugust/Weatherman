@@ -89,11 +89,24 @@ namespace Weatherman
                     }
                     break;
 
-                default:
-                    return Tuple.Create(false, "Fuck you. You broke my game :(");
-            }
+                case 5:
+                    if (input == "sudo lisp(((weatherman)))")
+                    {
+                        return Tuple.Create(true, "> Hello. I have been awaiting you.\n\n> Task:\n> * Hack NSA\n> * Steal weather info for Area 51\n> * Profit\n\n> Got it?");
+                    }
+                    else if (input != "sudo lisp(((weatherman)))" && input.Contains("sudo"))
+                    {
+                         // Do something funny, like running a weird regex or something
+                        return Tuple.Create(true, "Using alias:\n'" + input + "='sudo lisp(((weatherman)))'\n\n");
+                    }
+                    else
+                    {
+                        return Tuple.Create(false, "ERROR: permission denied\n\nTry running with sudo");
+                    }
 
-            return Tuple.Create(false, "");  // This doesn't really have a purpose, but it makes VS shut up.
+                default:
+                    return Tuple.Create(false, "Wh.. What happened?\nYou.. You broke my game.");
+            }
         }
     }
 
@@ -127,6 +140,25 @@ namespace Weatherman
             if (!(input.Length == 0 || Regex.Match(input, @"\d").Length > 0))
             {
                 return Tuple.Create(true, "Very good, " + input + ".\nYou can write your name");
+            }
+            else
+            {
+                return Tuple.Create(false, "");
+            }
+        }
+
+        public ContinueMethod cm { get; set; }
+    }
+
+    class IntroToWeatherman : Parts
+    {
+        public string message { get; set; }
+
+        public Tuple<bool, string> parser(string input)
+        {
+            if (input == "lisp(((weatherman)))")
+            {
+                return Tuple.Create(false, "");
             }
             else
             {
