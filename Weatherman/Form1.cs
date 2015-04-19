@@ -47,6 +47,7 @@ namespace Weatherman
             PartsArray[8] = new HackNSA();
             PartsArray[9] = new HackNSAReturn();
             PartsArray[10] = new AccessServer();
+            PartsArray[11] = new CheckAccessServer();
         }
 
         private void label1_Click(object sender, EventArgs e)
@@ -126,7 +127,17 @@ namespace Weatherman
             WriteMessage(PartsArray[0].message);
 
             UserInput.Focus();
-            HideCaret(UserInput.Handle);
+
+            try 
+            {
+                HideCaret(UserInput.Handle);
+            }
+            catch (DllNotFoundException ex) 
+            {
+                Console.WriteLine(ex.Message);
+            }
+
+            
         }
 
         private void textBox1_TextChanged_1(object sender, EventArgs e)
@@ -180,7 +191,7 @@ namespace Weatherman
                 {
                     #region Level 3
                     case 3:
-                        WriteMessage("Loading Whetherman..\n\n\nShit..\n\nI mean Weatherman..");
+                        WriteMessage("Loading Whetherman..");
                         weathermanLoad.Visible = true;
                         loadingTimer.Enabled = true;
                         level++;

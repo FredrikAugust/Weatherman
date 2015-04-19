@@ -104,15 +104,34 @@ namespace Weatherman
                         return Tuple.Create(false, "ERROR: permission denied\n\nTry running with sudo");
                     }
 
-                case 10:
-                    // > ERROR: permission denied\n>\n> Try running with sudo
-                    break;
+                case 11:
+	                // > ERROR: permission denied\n>\n> Try running with sudo
+                    if (input.ToLower().Contains("sudo"))
+                    {
+                        return Tuple.Create(false, "> I don't know what kind of\n> shit you typed, but it's wrong.\n> Just run:\n> \n> login -s NSA -p myfile.txt \n> \n> for the love of god.");
+                    }
+                    else if (input.ToLower() == "sudo login -s NSA -p myfile.txt")
+                    {
+                        return Tuple.Create(true, @"> High five.
+>
+> Well, not really. 
+> Since I am just an API I can't
+> really do that :(");
+                    }
+                    else if (input.ToLower().Contains("login") && _errorLevel > 0)
+                    {
+                        return Tuple.Create(false, "> Sorry, forgot to tell you.\n> sudo.\n>\n> sudo login -s NSA -p myfile.txt");
+                    }
+                    else
+                    {
+                        return Tuple.Create(false, "> Oh come on.\n> Now you're just messing with me..\n>\n> Just type this already: login -s NSA -p myfile.txt\n> \n> And remember sudo. Please. sudo.");
+                    }
 
                 default:
                     return Tuple.Create(false, "Wh.. What happened?\nYou.. You broke my game.");
             }
 
-            throw new Exception();
+            throw new Exception(); // What is this doing here you say? I don't know, but it doesn't work without it.
         }
     }
 
@@ -263,16 +282,18 @@ namespace Weatherman
 
         public Tuple<bool, string> parser(string input)
         {
-            if (input == "login -s NSA -p myfile.txt")
+            if (input == "sudo login -s NSA -p myfile.txt")
+            {
+                return Tuple.Create(true, @"> High five.
+>
+> Well, not really. 
+> Since I am just an API I can't
+> really do that :(""");
+            }
+            else
             {
                 return Tuple.Create(false, "");
             }
-            else if (input == "sudo login -s NSA -p myfile.txt")
-            {
-                return Tuple.Create(true, "> I am impressed;\n> You remembered that to abuse\n> your super powers.");
-            }
-
-            throw new Exception();
         }
 
         public ContinueMethod cm { get; set; }
