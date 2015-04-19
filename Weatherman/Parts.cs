@@ -10,13 +10,15 @@ namespace Weatherman
     /// This is just used to determine what resulted in the user advancing.
     /// Doesn't do anything on it's own.
     /// </summary>
-
     enum ContinueMethod
     {
         CorrectAnswer,
         ErrorOverload
     }
 
+    /// <summary>
+    /// This interface is to make it easier for myself to add new parts to the program, althoguh it is still a pain..
+    /// </summary>
     interface Parts
     {
         string message { get; set; }  // What the user should be prompted with initially
@@ -26,7 +28,6 @@ namespace Weatherman
         /// </summary>
         /// <param name="input">What the user entered</param>
         /// <returns>Boolean for determining whether the user should advance or not, and a string for showing to the user</returns>
-
         Tuple<bool, string> parser(string input);
 
         ContinueMethod cm { get; set; }
@@ -43,7 +44,6 @@ namespace Weatherman
         /// </summary>
         /// <param name="input">What the user entered</param>
         /// <returns>Boolean for checking if the user should advance or not, and a string for showing to the user</returns>
-
         public Tuple<bool, string> parser(string input)
         {
             if (input.ToLower() == "anything")
@@ -67,7 +67,6 @@ namespace Weatherman
         /// <param name="_errorLevel">How many times the user has failed</param>
         /// <param name="input">What the user inputted to the mission</param>
         /// <returns>Boolean for determining whether the user shall advance or not, and a string for showing the user.</returns>
-
         public Tuple<bool, string> ErrorHandler(int _level, int _errorLevel, string input)
         {
             switch (_level)
@@ -83,6 +82,13 @@ namespace Weatherman
                     }
                     break;
 
+                case 2:
+                    if (input.Length == 0 || Regex.Match(input, @"\d").Length > 0)
+                    {
+                        return Tuple.Create(false, "Unless my programming skills are\nnot perfect;\n'" + input + "'\nis not a name.\n\nPlease enter your name.");
+                    }
+                    break;
+
                 default:
                     return Tuple.Create(false, "You really suck, don't you?");
             }
@@ -95,7 +101,6 @@ namespace Weatherman
     /// This will just respond to you after you finish the first mission.
     /// This will lead to the next part, which is getting name etc.
     /// </summary>
-
     class WelcomeResponseClass : Parts
     {
         public string message { get; set; }  // This is just the message to display when the mission starts
@@ -107,11 +112,29 @@ namespace Weatherman
         /// </summary>
         /// <param name="input">The text which the user inputted</param>
         /// <returns>Boolean for determining whether the code passed the test or not and a return string for displaying</returns>
+        public Tuple<bool, string> parser(string input)
+        {
+            return Tuple.Create(true, message);
+        }
+    }
+
+    class GetNameClass : Parts
+    {
+        public string message { get; set; }
 
         public Tuple<bool, string> parser(string input)
         {
-            return Tuple.Create(true, "Wohooo.");
+            if (!(input.Length == 0 || Regex.Match(input, @"\d").Length > 0))
+            {
+                return Tuple.Create(true, "Very good, " + input + ".\nYou can write your name");
+            }
+            else
+            {
+                return Tuple.Create(false, "");
+            }
         }
+
+        public ContinueMethod cm { get; set; }
     }
 
 }

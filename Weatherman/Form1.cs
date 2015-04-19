@@ -22,6 +22,10 @@ namespace Weatherman
 
         private Parts[] PartsArray = new Parts[20];
 
+        /// <summary>
+        /// In a lack of better places to do this, I will load all the function into the array in the form_load function.
+        /// This is becuase I couldn't think of a better way to do it, and I don't have time ATM to find that out either.
+        /// </summary>
         private void Form1_Load(object sender, EventArgs e)
         {
             // Include splash screen perhaps?
@@ -35,6 +39,11 @@ namespace Weatherman
             PartsArray[1] = new WelcomeResponseClass()
             {
                 message = "This is so disorienting."
+            };
+
+            PartsArray[2] = new GetNameClass() 
+            {
+                message = "What is your name?\nI'm not joking.\n\nIt's an important part of\ngaining trust."
             };
         }
 
@@ -53,6 +62,9 @@ namespace Weatherman
 
         }
 
+        /// <summary>
+        /// This is a small hack that removes the marker from the input, so that it doens't ruin that 8-bit feel
+        /// </summary>
         private void UserInput_Enter(object sender, EventArgs e)
         {
             this.Enabled = false;
@@ -81,18 +93,12 @@ namespace Weatherman
         /// <summary>
         /// These variables are used to determine what to write using the 'typewriter' method
         /// </summary>
-
         private int _timerIndex = 0;
         private string _text;
 
         /// <summary>
-        /// Nothing out of the ordinary;
-        /// after a 100 ticks this will write out a new letter form the string which contains the message to show.
-        /// This generates a "typewriter" effect
-        /// When the method has iterated through all the letters in the string it will remove the underscore (cursor)
-        /// and place it on the line under.
+        /// Small script that creates a typewriter effect and places cursor on the next line
         /// </summary>
-
         private void TextTimer_Tick(object sender, EventArgs e)
         {
             Dialogue.Text = _text.Substring(0, _timerIndex) + "_";  //Substring is a part of Type_Text String that we declared at the start
@@ -104,13 +110,11 @@ namespace Weatherman
             }
         }
 
-        private int level;
+        private int level; // This determines which mission the user is on
 
         /// <summary>
-        /// This first initiates the timer which controls the tyepwriter effect of the main game dialogue.
-        /// After that it starts the timer which creates a cursor in the input area.
+        /// Initiates the program by loading the first module
         /// </summary>
-
         private void button1_Click(object sender, EventArgs e)  // Power button
         {
             level = 0;
@@ -146,23 +150,43 @@ namespace Weatherman
         /// if it did it will do the same as above. (once again some horrible code, but it works)
         /// If not it will print the message saying you failed once again, and it will increase the error counter, which is again used to tailor the output.
         /// </summary>
-
         private void UserInput_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.Enter)
             {
+                # region quit This quits the program if the input contains 'quit' or 'exit'
+                if (UserInput.Text == "quit" || UserInput.Text == "exit")
+                {
+                    Environment.Exit(0);
+                }
+                #endregion
+
+                #region welcome-comment This sets the message parameter of the second "mission"
+                if (level == 1 && PartsArray[0].cm == ContinueMethod.CorrectAnswer)
+                {
+                    PartsArray[1].message = "Ok, so congratulations;\nyou managed to type a word!\nPrepare for the next challenge...\n\nEnter your name.";
+                }
+                else if (level == 1 && PartsArray[0].cm == ContinueMethod.ErrorOverload)
+                {
+                    PartsArray[1].message = "You didn't even manage\nto type a word. I'm actually \ntruly impressed. Not bad.\n\nNow, for the next task...\n\nWhat is your name?";
+                }
+                #endregion
+
                 TextTimer.Enabled = false;
 
                 Tuple<bool, string> ParseResult = PartsArray[level].parser(UserInput.Text);
 
                 if (ParseResult.Item1)  // Did it pass the initial test?
                 {
+                    #region UserInputParsing Parses the user input and sees if it is a valid input for proceeding to the next level
                     PartsArray[level].cm = ContinueMethod.CorrectAnswer;
                     level += 1;
                     WriteMessage(ParseResult.Item2);
+                    #endregion
                 }
                 else
                 {
+                    #region ErrorHandling Simple error handling of the missions
                     Tuple<bool, string> ErrResult = ErrHandler.ErrorHandler(level, errorLevel, UserInput.Text);
                     if (ErrResult.Item1)
                     {
@@ -175,6 +199,7 @@ namespace Weatherman
                         WriteMessage(ErrResult.Item2);
                         errorLevel += 1;
                     }
+                    #endregion
                 }
 
                 UserInput.Text = "";  // This clears the input field for next 'task'
