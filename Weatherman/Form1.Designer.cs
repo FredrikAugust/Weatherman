@@ -41,6 +41,9 @@ namespace Weatherman
             this.TextTimer = new System.Windows.Forms.Timer(this.components);
             this.UserInput = new System.Windows.Forms.TextBox();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.nsahack = new System.Windows.Forms.ProgressBar();
+            this.weathermanLoad = new System.Windows.Forms.ProgressBar();
+            this.loadingTimer = new System.Windows.Forms.Timer(this.components);
             this.SuspendLayout();
             // 
             // PowerButton
@@ -78,7 +81,7 @@ namespace Weatherman
             // 
             // TextTimer
             // 
-            this.TextTimer.Interval = 75;
+            this.TextTimer.Interval = 50;
             this.TextTimer.Tick += new System.EventHandler(this.TextTimer_Tick);
             // 
             // UserInput
@@ -106,10 +109,34 @@ namespace Weatherman
             this.panel1.Size = new System.Drawing.Size(604, 25);
             this.panel1.TabIndex = 5;
             // 
+            // nsahack
+            // 
+            this.nsahack.BackColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.nsahack.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.nsahack.Location = new System.Drawing.Point(97, 385);
+            this.nsahack.Name = "nsahack";
+            this.nsahack.Size = new System.Drawing.Size(604, 23);
+            this.nsahack.TabIndex = 6;
+            // 
+            // weathermanLoad
+            // 
+            this.weathermanLoad.Location = new System.Drawing.Point(97, 379);
+            this.weathermanLoad.Name = "weathermanLoad";
+            this.weathermanLoad.Size = new System.Drawing.Size(604, 29);
+            this.weathermanLoad.TabIndex = 7;
+            this.weathermanLoad.Visible = false;
+            // 
+            // loadingTimer
+            // 
+            this.loadingTimer.Interval = 200;
+            this.loadingTimer.Tick += new System.EventHandler(this.loadingTimer_Tick);
+            // 
             // Weatherman
             // 
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.ClientSize = new System.Drawing.Size(821, 453);
+            this.Controls.Add(this.weathermanLoad);
+            this.Controls.Add(this.nsahack);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.Dialogue);
             this.Controls.Add(this.PowerButton);
@@ -132,6 +159,9 @@ namespace Weatherman
         private System.Windows.Forms.Timer TextTimer;
         private TextBox UserInput;
         private Panel panel1;
+        private ProgressBar nsahack;
+        private ProgressBar weathermanLoad;
+        private Timer loadingTimer;
     }
 }
 

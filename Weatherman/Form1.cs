@@ -28,23 +28,19 @@ namespace Weatherman
         /// </summary>
         private void Form1_Load(object sender, EventArgs e)
         {
+            nsahack.Hide();
+
             // Include splash screen perhaps?
 
             // Add all the parts to the partsarray
             PartsArray[0] = new WelcomeClass() 
             {
-                message = "Welcome to Weatherman!\nYou can always type your \ncommands, even when \nWeatherman is speaking. \nDon't hesitate to interupt.\n\nType anything to start"
+                message = "Welcome to Weatherman!\nYou can always type your \ncommands, even when \nWeatherman is speaking. \nDon't hesitate to interupt.\n\nType anything to start or\nexit to exit."
             };
 
-            PartsArray[1] = new WelcomeResponseClass()
-            {
-                message = "This is so disorienting."
-            };
+            PartsArray[1] = new WelcomeResponseClass(); // This isntance of the class does not have a message prop becuase it doesn't need one.
 
-            PartsArray[2] = new GetNameClass() 
-            {
-                message = "What is your name?\nI'm not joking.\n\nIt's an important part of\ngaining trust."
-            };
+            PartsArray[2] = new GetNameClass(); // Same as the reason stated above.
         }
 
         private void label1_Click(object sender, EventArgs e)
@@ -155,13 +151,13 @@ namespace Weatherman
             if (e.KeyCode == Keys.Enter)
             {
                 # region quit This quits the program if the input contains 'quit' or 'exit'
-                if (UserInput.Text == "quit" || UserInput.Text == "exit")
+                if (UserInput.Text.ToLower() == "quit" || UserInput.Text.ToLower() == "exit")
                 {
                     Environment.Exit(0);
                 }
                 #endregion
 
-                #region welcome-comment This sets the message parameter of the second "mission"
+                #region Level 1
                 if (level == 1 && PartsArray[0].cm == ContinueMethod.CorrectAnswer)
                 {
                     PartsArray[1].message = "Ok, so congratulations;\nyou managed to type a word!\nPrepare for the next challenge...\n\nEnter your name.";
@@ -174,35 +170,79 @@ namespace Weatherman
 
                 TextTimer.Enabled = false;
 
-                Tuple<bool, string> ParseResult = PartsArray[level].parser(UserInput.Text);
+                switch (level)
+                {
+                    case 3:
+                        WriteMessage("Loading Whetherman..\n\n\nShit..\n\nI mean Weatherman..");
+                        weathermanLoad.Visible = true;
+                        loadingTimer.Enabled = true;
+                        level++;
+                        break;
 
-                if (ParseResult.Item1)  // Did it pass the initial test?
-                {
-                    #region UserInputParsing Parses the user input and sees if it is a valid input for proceeding to the next level
-                    PartsArray[level].cm = ContinueMethod.CorrectAnswer;
-                    level += 1;
-                    WriteMessage(ParseResult.Item2);
-                    #endregion
-                }
-                else
-                {
-                    #region ErrorHandling Simple error handling of the missions
-                    Tuple<bool, string> ErrResult = ErrHandler.ErrorHandler(level, errorLevel, UserInput.Text);
-                    if (ErrResult.Item1)
-                    {
-                        PartsArray[level].cm = ContinueMethod.ErrorOverload;
-                        level += 1;
-                        WriteMessage(ErrResult.Item2);
-                    }
-                    else
-                    {
-                        WriteMessage(ErrResult.Item2);
-                        errorLevel += 1;
-                    }
-                    #endregion
+                    default:
+                        try
+                        {
+                            Tuple<bool, string> ParseResult = PartsArray[level].parser(UserInput.Text);
+
+                            if (ParseResult.Item1)  // Did it pass the initial test?
+                            {
+                                #region UserInputParsing Parses the user input and sees if it is a valid input for proceeding to the next level
+                                PartsArray[level].cm = ContinueMethod.CorrectAnswer;
+                                level += 1;
+                                WriteMessage(ParseResult.Item2);
+                                #endregion
+                            }
+                            else
+                            {
+                                #region ErrorHandling Simple error handling of the missions
+                                Tuple<bool, string> ErrResult = ErrHandler.ErrorHandler(level, errorLevel, UserInput.Text);
+                                if (ErrResult.Item1)
+                                {
+                                    PartsArray[level].cm = ContinueMethod.ErrorOverload;
+                                    level += 1;
+                                    WriteMessage(ErrResult.Item2);
+                                }
+                                else
+                                {
+                                    WriteMessage(ErrResult.Item2);
+                                    errorLevel += 1;
+                                }
+                                #endregion
+                            }
+                        }
+                        catch (NullReferenceException ex)
+                        {
+                            WriteMessage("Level " + level + " doesn't exist yet.");
+                            Console.WriteLine(ex.Message);
+                        }
+                        break;
                 }
 
                 UserInput.Text = "";  // This clears the input field for next 'task'
+            }
+        }
+
+        bool jokeVirgin = true;
+
+        private void loadingTimer_Tick(object sender, EventArgs e)
+        {
+            if ((weathermanLoad.Value < 100 && weathermanLoad.Value != 80) || (weathermanLoad.Value < 100 && !jokeVirgin))
+            {
+                weathermanLoad.Value += 1;
+                loadingTimer.Interval -= 1;
+            }
+            else if (weathermanLoad.Value == 80 && jokeVirgin)
+            {
+                weathermanLoad.Value = 20;
+                TextTimer.Enabled = false;
+                WriteMessage("Heh.");
+                jokeVirgin = false;
+            }
+            else if (weathermanLoad.Value == 100)
+            {
+                loadingTimer.Enabled = false;
+                weathermanLoad.Visible = false;
+                level += 1;
             }
         }
     }

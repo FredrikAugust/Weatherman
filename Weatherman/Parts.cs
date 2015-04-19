@@ -90,7 +90,7 @@ namespace Weatherman
                     break;
 
                 default:
-                    return Tuple.Create(false, "You really suck, don't you?");
+                    return Tuple.Create(false, "Fuck you. You broke my game :(");
             }
 
             return Tuple.Create(false, "");  // This doesn't really have a purpose, but it makes VS shut up.
