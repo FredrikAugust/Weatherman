@@ -222,6 +222,10 @@ namespace Weatherman
             }
         }
 
+        /// <summary>
+        /// Increase the loading bar for weatherman
+        /// </summary>
+
         bool jokeVirgin = true;
 
         private void loadingTimer_Tick(object sender, EventArgs e)
