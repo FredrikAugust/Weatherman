@@ -36,7 +36,18 @@ namespace Weatherman
             // Add all the parts to the partsarray
             PartsArray[0] = new WelcomeClass() 
             {
-                message = "Welcome to Weatherman!\nYou can always type your \ncommands, even when \nWeatherman is speaking. \nDon't hesitate to interupt.\n\nType anything to start or\nexit to exit.\n\nIf you are stuck,\npress enter.\nThat usually works."
+                message = @"Welcome to Weatherman!
+You can always type your 
+commands, even when 
+Weatherman is speaking. 
+Don't hesitate to interupt.
+
+Type anything to start or
+exit to exit.
+
+If you are stuck,
+press enter.
+That usually works."
             };
 
             PartsArray[1] = new WelcomeResponseClass(); // This isntance of the class does not have a message prop becuase it doesn't need one.
@@ -48,6 +59,11 @@ namespace Weatherman
             PartsArray[9] = new HackNSAReturn();
             PartsArray[10] = new AccessServer();
             PartsArray[11] = new CheckAccessServer();
+            PartsArray[12] = new RememberCode();
+            PartsArray[13] = new RemberCodeParser();
+            PartsArray[14] = new GoodBye();
+            PartsArray[15] = new Exit();
+
         }
 
         private void label1_Click(object sender, EventArgs e)

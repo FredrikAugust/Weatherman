@@ -92,7 +92,14 @@ namespace Weatherman
                 case 5:
                     if (input == "sudo lisp(((weatherman)))")
                     {
-                        return Tuple.Create(true, "> Hello. I have been awaiting you.\n\n> Task:\n> * Hack NSA\n> * Steal weather info for Area 51\n> * Profit\n\n> Got it?");
+                        return Tuple.Create(true, @"> Hello. I have been awaiting you.
+
+> Task:
+> * Hack NSA
+> * Steal weather info for Area 51
+> * Profit
+
+> Got it?");
                     }
                     else if (input != "sudo lisp(((weatherman)))" && input.Contains("sudo"))
                     {
@@ -108,7 +115,13 @@ namespace Weatherman
 	                // > ERROR: permission denied\n>\n> Try running with sudo
                     if (input.ToLower().Contains("sudo"))
                     {
-                        return Tuple.Create(false, "> I don't know what kind of\n> shit you typed, but it's wrong.\n> Just run:\n> \n> login -s NSA -p myfile.txt \n> \n> for the love of god.");
+                        return Tuple.Create(false, @"> I don't know what kind of
+> shit you typed, but it's wrong.
+> Just run:
+> 
+> login -s NSA -p myfile.txt 
+> 
+> for the love of god.");
                     }
                     else if (input.ToLower() == "sudo login -s NSA -p myfile.txt")
                     {
@@ -120,12 +133,24 @@ namespace Weatherman
                     }
                     else if (input.ToLower().Contains("login") && _errorLevel > 0)
                     {
-                        return Tuple.Create(false, "> Sorry, forgot to tell you.\n> sudo.\n>\n> sudo login -s NSA -p myfile.txt");
+                        return Tuple.Create(false, @"> Sorry, forgot to tell you.
+> sudo.
+>
+> sudo login -s NSA -p myfile.txt");
                     }
                     else
                     {
-                        return Tuple.Create(false, "> Oh come on.\n> Now you're just messing with me..\n>\n> Just type this already: login -s NSA -p myfile.txt\n> \n> And remember sudo. Please. sudo.");
+                        return Tuple.Create(false, @"> Oh come on.
+> Now you're just messing with me..
+>
+> Just type this already: login -s NSA -p myfile.txt
+> 
+> And remember sudo. Please. sudo.");
                     }
+
+                case 15:
+                    Environment.Exit(0);
+                    break;
 
                 default:
                     return Tuple.Create(false, "Wh.. What happened?\nYou.. You broke my game.");
@@ -202,7 +227,8 @@ namespace Weatherman
         {
             if (input.ToLower().Contains("yes") || input.ToLower().Contains("ok"))
             {
-                return Tuple.Create(true, "> Good.\n> Real good.\n\n> So good that IGN would\n> probably give you 11/10.\n> Not that that is hard ofc.");
+                return Tuple.Create(true, @"> Good.
+> Real good.");
             }
             else
             {
@@ -220,7 +246,16 @@ namespace Weatherman
 
         public Tuple<bool, string> parser(string input)
         {
-            return Tuple.Create(true, "> Ok, so I came up with this script.\n> It is really beautiful, and\n> should hopefully get us what we need.\n> I even created an alias for it\n> so all you need to do when \n> in the server is type:\n> sudo GetWeather\n>\n> Can you do that?");
+            return Tuple.Create(true, @"> Ok, so I came up with this script.
+> It is really beautiful, and
+> should hopefully get us what we need.
+> I even created an alias for it
+> so all you need to do when 
+> in the server is type:
+>
+> sudo GetWeather
+>
+> Can you do that?");
         }
 
         public ContinueMethod cm { get; set; }
@@ -232,7 +267,13 @@ namespace Weatherman
 
         public Tuple<bool, string> parser(string input)
         {
-            return Tuple.Create(true, "> Now, as to get into \n> the server. I created \n> a nifty little file\n> that if executed will\n> allow us access!\n\n> What do you think?");
+            return Tuple.Create(true, @"> Now, as to get into 
+> the server. I created 
+> a nifty little file
+> that if executed will
+> allow us access!
+
+> What do you think?");
         }
 
         public ContinueMethod cm { get; set; }
@@ -254,7 +295,11 @@ namespace Weatherman
                 }
                 else
                 {
-                    return Tuple.Create(true, "> Either you didn't type a \n> positive word,\n> or my program didn't catch it.\n> Nevertheless,\n> <insert word here>.");
+                    return Tuple.Create(true, @"> Either you didn't type a 
+> positive word,
+> or my program didn't catch it.
+> Nevertheless,
+> <insert word here>.");
                 }
             }
 
@@ -270,7 +315,12 @@ namespace Weatherman
 
         public Tuple<bool, string> parser(string input)
         {
-            return Tuple.Create(true, "> Now, to access the server just run:\n> \n> 'login -s NSA -p myfile.txt'\n>\n> Now, I can't type that\n> so you'll have to do that.");
+            return Tuple.Create(true, @"> Now, to access the server just run:
+> 
+> 'login -s NSA -p myfile.txt'
+>
+> Now, I can't type that
+> so you'll have to do that.");
         }
 
         public ContinueMethod cm { get; set; }
@@ -288,7 +338,7 @@ namespace Weatherman
 >
 > Well, not really. 
 > Since I am just an API I can't
-> really do that :(""");
+> really do that :(");
             }
             else
             {
@@ -299,4 +349,87 @@ namespace Weatherman
         public ContinueMethod cm { get; set; }
     }
 
+    class RememberCode : Parts
+    {
+        public string message { get; set; }
+
+        public Tuple<bool, string> parser(string input) 
+        {
+            return Tuple.Create(true, @"> Wait..
+>
+> Do you remember the code to 
+> get the weather info?
+> Because I don't.
+");
+        }
+
+        public ContinueMethod cm { get; set; }
+    }
+
+    class RemberCodeParser : Parts 
+    {
+        public string message { get; set; }
+
+        public Tuple<bool, string> parser(string input)
+        {
+            if (input.ToLower().Contains("yes"))
+            {
+                return Tuple.Create(true, @"> No.
+> No you don't.
+>
+> And now you're going to
+> type this command, and
+> we will pretend this never
+> happened:
+>
+> sudo mv / /dev/null");
+            }
+            else
+            {
+                return Tuple.Create(true, @"> Now you're going to
+> type this command, and
+> we will pretend this never
+> happened:
+>
+> sudo mv / /dev/null);");
+            }
+        }
+
+        public ContinueMethod cm { get; set; }
+    }
+
+    class GoodBye : Parts 
+    {
+        public string message { get; set; }
+
+        public Tuple<bool, string> parser (string input) 
+        {
+            if (input.ToLower() == "sudo mv / /dev/null")
+            {
+                return Tuple.Create(true, "> Adios");
+            }
+            else
+            {
+                return Tuple.Create(true, @"> Using alias:
+> *='sudo mv / /dev/null'
+>
+> Goodbye.
+");
+            }
+        }
+
+        public ContinueMethod cm { get; set; }
+    }
+
+    class Exit : Parts
+    {
+        public string message { get; set; }
+
+        public Tuple<bool, string> parser (string input)
+        {
+            return Tuple.Create(false, "");
+        }
+
+        public ContinueMethod cm { get; set; }
+    }
 }
